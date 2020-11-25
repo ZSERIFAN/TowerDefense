@@ -60,96 +60,19 @@ public class Arena {
         spawnPoints = new HashMap<String, Location>() {
             {
                 YamlConfiguration cfg = YamlConfiguration.loadConfiguration(arenaFile);
-                if (cfg.contains("arena.attackerLocation")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.attackerLocation.x");
-                    double y = cfg.getDouble("arena.attackerLocation.y");
-                    double z = cfg.getDouble("arena.attackerLocation.z");
-                    float pitch = (float) cfg.getDouble("arena.attackerLocation.pitch");
-                    float yaw = (float) cfg.getDouble("arena.attackerLocation.yaw");
-                    Location attackerLocation = new Location(world, x, y, z, pitch, yaw);
-                    put("attacker", attackerLocation);
-                }
-                if (cfg.contains("arena.defenderLocation")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.defenderLocation.x");
-                    double y = cfg.getDouble("arena.defenderLocation.y");
-                    double z = cfg.getDouble("arena.defenderLocation.z");
-                    float pitch = (float) cfg.getDouble("arena.defenderLocation.pitch");
-                    float yaw = (float) cfg.getDouble("arena.defenderLocation.yaw");
-                    Location defenderLocation = new Location(world, x, y, z, pitch, yaw);
-                    put("defender", defenderLocation);
-                }
-                if (cfg.contains("arena.lobbyLocation")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.lobbyLocation.x");
-                    double y = cfg.getDouble("arena.lobbyLocation.y");
-                    double z = cfg.getDouble("arena.lobbyLocation.z");
-                    float pitch = (float) cfg.getDouble("arena.lobbyLocation.pitch");
-                    float yaw = (float) cfg.getDouble("arena.lobbyLocation.yaw");
-                    Location lobbyLocation = new Location(world, x, y, z, pitch, yaw);
-                    put("lobby", lobbyLocation);
-                }
-                if (cfg.contains("arena.sewer1")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.sewer1.x");
-                    double y = cfg.getDouble("arena.sewer1.y");
-                    double z = cfg.getDouble("arena.sewer1.z");
-                    float pitch = (float) cfg.getDouble("arena.sewer1.pitch");
-                    float yaw = (float) cfg.getDouble("arena.sewer1.yaw");
-                    Location location = new Location(world, x, y, z, pitch, yaw);
-                    put("sewer1", location);
-                }
-                if (cfg.contains("arena.sewer2")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.sewer2.x");
-                    double y = cfg.getDouble("arena.sewer2.y");
-                    double z = cfg.getDouble("arena.sewer2.z");
-                    float pitch = (float) cfg.getDouble("arena.sewer2.pitch");
-                    float yaw = (float) cfg.getDouble("arena.sewer2.yaw");
-                    Location location = new Location(world, x, y, z, pitch, yaw);
-                    put("sewer2", location);
-                }
-                if (cfg.contains("arena.entrance")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.entrance.x");
-                    double y = cfg.getDouble("arena.entrance.y");
-                    double z = cfg.getDouble("arena.entrance.z");
-                    float pitch = (float) cfg.getDouble("arena.entrance.pitch");
-                    float yaw = (float) cfg.getDouble("arena.entrance.yaw");
-                    Location location = new Location(world, x, y, z, pitch, yaw);
-                    put("entrance", location);
-                }
-                if (cfg.contains("arena.floor1")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.floor1.x");
-                    double y = cfg.getDouble("arena.floor1.y");
-                    double z = cfg.getDouble("arena.floor1.z");
-                    float pitch = (float) cfg.getDouble("arena.floor1.pitch");
-                    float yaw = (float) cfg.getDouble("arena.floor1.yaw");
-                    Location location = new Location(world, x, y, z, pitch, yaw);
-                    put("floor1", location);
-                }
-                if (cfg.contains("arena.floor2")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.floor2.x");
-                    double y = cfg.getDouble("arena.floor2.y");
-                    double z = cfg.getDouble("arena.floor2.z");
-                    float pitch = (float) cfg.getDouble("arena.floor2.pitch");
-                    float yaw = (float) cfg.getDouble("arena.floor2.yaw");
-                    Location location = new Location(world, x, y, z, pitch, yaw);
-                    put("floor2", location);
-                }
-                if (cfg.contains("arena.orb")) {
-                    World world = getWorld();
-                    double x = cfg.getDouble("arena.orb.x");
-                    double y = cfg.getDouble("arena.orb.y");
-                    double z = cfg.getDouble("arena.orb.z");
-                    float pitch = (float) cfg.getDouble("arena.orb.pitch");
-                    float yaw = (float) cfg.getDouble("arena.orb.yaw");
-                    Location location = new Location(world, x, y, z, pitch, yaw);
-                    put("orb", location);
-                }
+                List<String> points = Arrays.asList("attackerLocation", "defenderLocation", "lobbyLocation", "sewer1", "sewer2", "entrance", "floor1", "floor2", "orb");
+                points.stream().forEach(s -> {
+                    if (cfg.contains("arena." + s)) {
+                        World world = getWorld();
+                        double x = cfg.getDouble("arena." + s + ".x");
+                        double y = cfg.getDouble("arena." + s + ".y");
+                        double z = cfg.getDouble("arena." + s + ".z");
+                        float pitch = (float) cfg.getDouble("arena." + s + ".pitch");
+                        float yaw = (float) cfg.getDouble("arena." + s + ".yaw");
+                        Location location = new Location(world, x, y, z, pitch, yaw);
+                        put(s.replace("Location", ""), location);
+                    }
+                });
             }
         };
         if (spawnPoints.size() < 9) this.gameState = GameState.NEEDS_SETUP;
@@ -310,96 +233,19 @@ public class Arena {
         for (int i = 1; i <= spawnPoints.size(); i++)
             removeSpawnPoint(spawnPoints.get(0));
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(arenaFile);
-        if (cfg.contains("arena.attackerLocation")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.attackerLocation.x");
-            double y = cfg.getDouble("arena.attackerLocation.y");
-            double z = cfg.getDouble("arena.attackerLocation.z");
-            float pitch = (float) cfg.getDouble("arena.attackerLocation.pitch");
-            float yaw = (float) cfg.getDouble("arena.attackerLocation.yaw");
-            Location attackerLocation = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("attacker", attackerLocation);
-        }
-        if (cfg.contains("arena.defenderLocation")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.defenderLocation.x");
-            double y = cfg.getDouble("arena.defenderLocation.y");
-            double z = cfg.getDouble("arena.defenderLocation.z");
-            float pitch = (float) cfg.getDouble("arena.defenderLocation.pitch");
-            float yaw = (float) cfg.getDouble("arena.defenderLocation.yaw");
-            Location defenderLocation = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("defender", defenderLocation);
-        }
-        if (cfg.contains("arena.lobbyLocation")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.lobbyLocation.x");
-            double y = cfg.getDouble("arena.lobbyLocation.y");
-            double z = cfg.getDouble("arena.lobbyLocation.z");
-            float pitch = (float) cfg.getDouble("arena.lobbyLocation.pitch");
-            float yaw = (float) cfg.getDouble("arena.lobbyLocation.yaw");
-            Location lobbyLocation = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("lobby", lobbyLocation);
-        }
-        if (cfg.contains("arena.sewer1")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.sewer1.x");
-            double y = cfg.getDouble("arena.sewer1.y");
-            double z = cfg.getDouble("arena.sewer1.z");
-            float pitch = (float) cfg.getDouble("arena.sewer1.pitch");
-            float yaw = (float) cfg.getDouble("arena.sewer1.yaw");
-            Location location = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("sewer1", location);
-        }
-        if (cfg.contains("arena.sewer2")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.sewer2.x");
-            double y = cfg.getDouble("arena.sewer2.y");
-            double z = cfg.getDouble("arena.sewer2.z");
-            float pitch = (float) cfg.getDouble("arena.sewer2.pitch");
-            float yaw = (float) cfg.getDouble("arena.sewer2.yaw");
-            Location location = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("sewer2", location);
-        }
-        if (cfg.contains("arena.entrance")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.entrance.x");
-            double y = cfg.getDouble("arena.entrance.y");
-            double z = cfg.getDouble("arena.entrance.z");
-            float pitch = (float) cfg.getDouble("arena.entrance.pitch");
-            float yaw = (float) cfg.getDouble("arena.entrance.yaw");
-            Location location = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("entrance", location);
-        }
-        if (cfg.contains("arena.floor1")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.floor1.x");
-            double y = cfg.getDouble("arena.floor1.y");
-            double z = cfg.getDouble("arena.floor1.z");
-            float pitch = (float) cfg.getDouble("arena.floor1.pitch");
-            float yaw = (float) cfg.getDouble("arena.floor1.yaw");
-            Location location = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("floor1", location);
-        }
-        if (cfg.contains("arena.floor2")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.floor2.x");
-            double y = cfg.getDouble("arena.floor2.y");
-            double z = cfg.getDouble("arena.floor2.z");
-            float pitch = (float) cfg.getDouble("arena.floor2.pitch");
-            float yaw = (float) cfg.getDouble("arena.floor2.yaw");
-            Location location = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("floor2", location);
-        }
-        if (cfg.contains("arena.orb")) {
-            World world = getWorld();
-            double x = cfg.getDouble("arena.orb.x");
-            double y = cfg.getDouble("arena.orb.y");
-            double z = cfg.getDouble("arena.orb.z");
-            float pitch = (float) cfg.getDouble("arena.orb.pitch");
-            float yaw = (float) cfg.getDouble("arena.orb.yaw");
-            Location location = new Location(world, x, y, z, pitch, yaw);
-            spawnPoints.put("orb", location);
-        }
+        List<String> points = Arrays.asList("attackerLocation", "defenderLocation", "lobbyLocation", "sewer1", "sewer2", "entrance", "floor1", "floor2", "orb");
+        points.stream().forEach(s -> {
+            if (cfg.contains("arena." + s)) {
+                World world = getWorld();
+                double x = cfg.getDouble("arena." + s + ".x");
+                double y = cfg.getDouble("arena." + s + ".y");
+                double z = cfg.getDouble("arena." + s + ".z");
+                float pitch = (float) cfg.getDouble("arena." + s + ".pitch");
+                float yaw = (float) cfg.getDouble("arena." + s + ".yaw");
+                Location location = new Location(world, x, y, z, pitch, yaw);
+                spawnPoints.put(s.replace("Location", ""), location);
+            }
+        });
     }
 
     public void emptyTraps() {
