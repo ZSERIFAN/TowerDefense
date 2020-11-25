@@ -1,0 +1,20 @@
+name: TowerDefense
+main: by.thmihnea.TowerDefense
+author: thmihnea
+description: Add the ultimate Tower Defense plugin to your server!
+version: 1.0
+
+commands:
+  td:
+    description: Access admin commands related to the Tower Defense plugin.
+    aliases: towerdefense, tdadmin
+  join:
+    description: Join an arena using this command.
+  leave:
+    description: Leave an arena by using this command.
+  build:
+    description: Allows you to bypass the BlockPlace/Break listeners.
+    aliases: b
+  tc:
+    description: Allows you to speak to your teammates during a game.
+    aliases: t

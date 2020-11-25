@@ -1,0 +1,33 @@
+# Configuration file for Tower Defense
+# Coded with love by thmihnea
+
+prices: # Prices for all the items available in the Shop.
+  bowarrow: 250
+  sword_upgrade: 100
+  gapple: 100
+  fire_shot: 100
+  armor_upgrade: 250
+  zombies: 250
+  skeletons: 250
+  wolves: 350
+  witches: 400
+  golem: 500
+  lava_trap: 250
+  wall: 100
+  invisibility: 350
+  water_bucket: 100
+  milk_bucket: 100
+  wall_breaker: 150
+  blindness: 350
+  sewer_key_1: 250
+  sewer_key_2: 250
+income:
+  attacker: 1
+  defender: 3
+cooldowns: # Set in seconds.
+  lava_trap: 150
+  wall: 150
+  combat: 5
+bounty:
+  default_money_on_kill: 150
+
