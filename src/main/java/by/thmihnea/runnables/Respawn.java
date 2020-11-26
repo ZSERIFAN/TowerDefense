@@ -8,7 +8,10 @@ import com.connorlinfoot.bountifulapi.BountifulAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
 
 public class Respawn implements Runnable {
 
@@ -33,10 +36,11 @@ public class Respawn implements Runnable {
             } else {
                 player.teleport(arena.getSpawnPoints().get("attacker"));
             }
+            for (PotionEffect effect : new ArrayList<PotionEffect>(player.getActivePotionEffects()))
+                player.removePotionEffect(effect.getType());
             ShopItemUtil.giveShop(player);
         }
         sendTitle();
-
     }
 
     void sendTitle() {

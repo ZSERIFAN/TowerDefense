@@ -2,7 +2,6 @@ package by.thmihnea.listeners.hub;
 
 import by.thmihnea.TowerDefense;
 import by.thmihnea.arena.Arena;
-import by.thmihnea.arena.GameState;
 import by.thmihnea.multiversion.XMaterial;
 import by.thmihnea.player.TDPlayer;
 import org.bukkit.entity.Player;
@@ -17,9 +16,13 @@ public class PlayerBlockBreakListener implements Listener {
         if (e.isCancelled()) return;
         Player p = e.getPlayer();
         TDPlayer tdPlayer = TDPlayer.tdPlayers.get(p.getUniqueId());
+        Arena arena = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p);
+        e.getBlock().getDrops().clear();
         if (tdPlayer.canBypassBuild()) return;
         if (tdPlayer.isInGame()) {
-            if (e.getBlock().getType() == XMaterial.GREEN_STAINED_GLASS.parseMaterial()) return;
+            if (e.getBlock().getType() == XMaterial.GLASS.parseMaterial()) return;
+            if (e.getBlock().getType().toString().toUpperCase().contains("WOOL") && arena.isDefender(p)) return;
+            if (e.getBlock().getType() == XMaterial.COBWEB.parseMaterial() && arena.isAttacker(p)) return;
             e.setCancelled(true);
         } else {
             if (!tdPlayer.canBypassBuild()) {

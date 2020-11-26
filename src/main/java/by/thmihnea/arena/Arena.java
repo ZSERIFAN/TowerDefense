@@ -154,6 +154,11 @@ public class Arena {
         return this.defenders.contains(p.getUniqueId());
     }
 
+    public boolean isSameTeam(Player p1, Player p2) {
+        if ((isAttacker(p1) && isAttacker(p2)) || isDefender(p1) && isDefender(p2)) return true;
+        else return false;
+    }
+
     public void startGame() {
         Location attackerSpawn = spawnPoints.get("attacker");
         Location defenderSpawn = spawnPoints.get("defender");
@@ -162,7 +167,7 @@ public class Arena {
         broadCastMessage(Lang.GAME_STARTED.toString());
         Location location = spawnPoints.get("orb");
         Block block = location.getBlock();
-        block.setType(XMaterial.GREEN_STAINED_GLASS.parseMaterial());
+        block.setType(XMaterial.GLASS.parseMaterial());
         for (UUID uuid : this.players) {
             Player p = Bukkit.getPlayer(uuid);
             TDPlayer tdp = TDPlayer.tdPlayers.get(p.getUniqueId());
@@ -249,7 +254,7 @@ public class Arena {
     }
 
     public void emptyTraps() {
-        for (Block block : this.traps)
+        for (Block block : new ArrayList<Block>(this.traps))
             traps.remove(block);
     }
 
@@ -276,17 +281,18 @@ public class Arena {
     public void emptyPlayers() {
         File hubFile = new File("plugins/TowerDefense/gameHub.yml");;
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(hubFile);
-        int n = players.size();
-        for (int i = 0; i < n; i++) {
+        for (UUID uuid : new ArrayList<UUID>(this.players)) {
             if (this.players.isEmpty()) break;
-            Player p = Bukkit.getPlayer(players.get(0));
+            Player p = Bukkit.getPlayer(uuid);
             TDPlayer tdPlayer = TDPlayer.tdPlayers.get(p.getUniqueId());
             tdPlayer.setInGame(false);
             p.teleport(new Location(Bukkit.getWorld(cfg.getString("hub.spawnLocation.world")), cfg.getDouble("hub.spawnLocation.x"), cfg.getDouble("hub.spawnLocation.y"), cfg.getDouble("hub.spawnLocation.z"), (float) cfg.getDouble("hub.spawnLocation.pitch"), (float) cfg.getDouble("hub.spawnLocation.yaw")));
             p.setFoodLevel(20);
             p.setHealth(20.0D);
             p.getInventory().clear();
+            p.getActivePotionEffects().clear();
             ArmorUtil.clearArmor(p);
+            p.getInventory().setHelmet(null);
             SelectorUtil.giveSelector(p);
             removeFromTeam(p);
             removeFromEcon(p);
@@ -415,8 +421,9 @@ public class Arena {
             players.remove(player.getUniqueId());
         TDPlayer tdPlayer = TDPlayer.tdPlayers.get(player.getUniqueId());
         if (!tdPlayer.getCooldowns().isEmpty())
-            for (Cooldown cooldown : tdPlayer.getCooldowns())
+            for (Cooldown cooldown : new ArrayList<Cooldown>(tdPlayer.getCooldowns())) {
                 tdPlayer.removeCooldown(cooldown);
+            }
         tdPlayer.resetMoney();
         tdPlayer.resetDeaths();
         tdPlayer.resetKills();

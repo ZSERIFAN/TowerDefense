@@ -129,11 +129,11 @@ public class ArenaShop implements InventoryProvider {
         ItemStack zombies = ItemCreateUtil.createItem(XMaterial.ZOMBIE_SPAWN_EGG.parseMaterial(), "§6Deploy Zombies", "", "§7§oSpawns a hoard of zombies in a select", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.zombies"));
         ItemStack skeletons = ItemCreateUtil.createItem(XMaterial.SKELETON_SPAWN_EGG.parseMaterial(), "§6Deploy Skeletons", "", "§7§oSpawns a hoard of skeletons in a select", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.skeletons"));
         ItemStack wolves = ItemCreateUtil.createItem(XMaterial.WOLF_SPAWN_EGG.parseMaterial(), "§6Deploy Wolves", "", "§7§oSpawns a hoard of wolves in a select", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.wolves"));
-        ItemStack witches = ItemCreateUtil.createItem(XMaterial.WITCH_SPAWN_EGG.parseMaterial(), "§6Deploy Witches", "", "§7§oSpawns a hoard of witches in a select", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.witches"));
         ItemStack golem = ItemCreateUtil.createItem(XMaterial.IRON_BLOCK.parseMaterial(), "§6Deploy Iron Golem", "", "§7§oSpawns an Iron Golem in a select", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.golem"));
-        ItemStack lavaTrap = ItemCreateUtil.createItem(XMaterial.LAVA_BUCKET.parseMaterial(), "§6Lava Trap", "", "§7§oEnables lava trap in a specific", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.lava_trap"));
+        ItemStack lavaTrap = ItemCreateUtil.createItem(XMaterial.BLAZE_ROD.parseMaterial(), "§6Lava Trap", "", "§7§oEnables lava trap in a specific", "§7§olocation. (Sewer 1/2, Main Entrace or Floor 1/2)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.lava_trap"));
         ItemStack wall = ItemCreateUtil.createItem(XMaterial.SAND.parseMaterial(), "§6Deploy Wall", "", "§7§oErects a wall in a specific/select", "§7§olocation. (up to 2 on each floor/sewer)", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.wall"));
         ItemStack blind = ItemCreateUtil.createItem(XMaterial.POTION.parseMaterial(), "§6Blindness Potion", "", "§7§oBlind any attacked, allowing", "§7§oyou to easily escape sticky acts.", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.blindness"));
+        ItemStack cobweb = ItemCreateUtil.createItem(XMaterial.COBWEB.parseMaterial(), "§6Throwable Web", "", "§7§oThrow some cobweb on the ground to", "§7§ohelp you out escape from the attackers.", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.cobweb"));
         contents.set(3, 1, ClickableItem.of(zombies, e -> {
             CreatureDeploy.shopZombies.open(player);
         }));
@@ -142,9 +142,6 @@ public class ArenaShop implements InventoryProvider {
         }));
         contents.set(3, 3, ClickableItem.of(wolves, e -> {
             CreatureDeploy.shopWolves.open(player);
-        }));
-        contents.set(3, 4, ClickableItem.of(witches, e -> {
-            CreatureDeploy.shopWitches.open(player);
         }));
         contents.set(3, 5, ClickableItem.of(golem, e -> {
             CreatureDeploy.shopGolem.open(player);
@@ -155,15 +152,18 @@ public class ArenaShop implements InventoryProvider {
         contents.set(3, 7, ClickableItem.of(wall, e -> {
             Wall.init(arena, player);
         }));
-        contents.set(4, 4, ClickableItem.of(blind, e -> {
+        contents.set(4, 3, ClickableItem.of(blind, e -> {
             BlindnessPotion.init(arena, player);
+        }));
+        contents.set(4, 5, ClickableItem.of(cobweb, e -> {
+            Cobweb.init(arena, player);
         }));
     }
 
     private void setupAttacker(Player player, InventoryContents contents) {
         Arena arena = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(player);
-        ItemStack water = ItemCreateUtil.createItem(XMaterial.WATER_BUCKET.parseMaterial(), "§6Water Bucket", "", "§7§oHelps you to get out of", "§7§olava traps. Only usable if you", "§7§oare trapped!", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.water_bucket"));
-        ItemStack milkBucket = ItemCreateUtil.createItem(XMaterial.MILK_BUCKET.parseMaterial(), "§6Milk Bucket", "", "§7§oHelps you disable active potion effects.",  "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.milk_bucket"));
+        ItemStack water = ItemCreateUtil.createItem(XMaterial.DIAMOND.parseMaterial(), "§6Extinguisher", "", "§7§oHelps you to get out of", "§7§olava traps. Only usable if you", "§7§oare trapped!", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.water_bucket"));
+        ItemStack milkBucket = ItemCreateUtil.createItem(XMaterial.SUGAR.parseMaterial(), "§6Demineralizer", "", "§7§oHelps you disable active potion effects.",  "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.milk_bucket"));
         ItemStack tnt = ItemCreateUtil.createItem(XMaterial.TNT.parseMaterial(), "§6Wall TNT", "", "§7§oAllows you to explode a wall,", "§7§oThis is the only to get through walls.", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.wall_breaker"));
         ItemStack invis = ItemCreateUtil.createItem(XMaterial.POTION.parseMaterial(), "§6Invisibility Potion", "", "§7§oGrants 5 seconds of invisibility", "§7§oallowing you for easier infiltration.", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.invisibility"));
         ItemStack sewer1 = ItemCreateUtil.createItem(XMaterial.TRIPWIRE_HOOK.parseMaterial(), "§6Sewer Key #1", "", "§7§oThis key is needed to enter the sewer rooms.", "§7§oPurchase this to diversify your strategy.", "", "§6• §fPrice: §e$" + TowerDefense.cfg.getInt("prices.sewer_key_1"));

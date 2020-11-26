@@ -31,11 +31,18 @@ public class PlayerDamagePlayerListener implements Listener {
         Arena arena2 = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p2);
         if (!(arena1.equals(arena2))) return;
 
-        if (arena1.isAttacker(p1) && arena1.isAttacker(p2)) e.setCancelled(true);
-        else if (arena1.isDefender(p1) && arena1.isDefender(p2)) e.setCancelled(true);
-
         p1.showPlayer(p2);
         p2.showPlayer(p1);
+
+        if (arena1.isAttacker(p1) && arena1.isAttacker(p2)) {
+            e.setCancelled(true);
+            return;
+        }
+        else if (arena1.isDefender(p1) && arena1.isDefender(p2)) {
+            e.setCancelled(true);
+            return;
+        }
+
         if (tdp1.hasCooldown(CooldownType.COMBAT)) tdp1.getCooldownByType(CooldownType.COMBAT).resetTime();
         else {
             Cooldown cp1 = new Cooldown(arena1, p1, CooldownType.COMBAT, 5);
@@ -63,6 +70,48 @@ public class PlayerDamagePlayerListener implements Listener {
 
         if (arena.isDefender(p)) {
             e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onProjectileDamage(EntityDamageByEntityEvent e) {
+        Entity damaged = e.getEntity();
+        Entity damager = e.getDamager();
+
+        if (!(damaged instanceof Player)) return;
+        Player p1 = (Player) damaged;
+        if (!(damager instanceof Projectile)) return;
+
+        Entity shooter = (Entity) ((Projectile) damager).getShooter();
+        if (!(shooter instanceof Player)) return;
+        Player p2 = ((Player) shooter).getPlayer();
+
+        Arena arena1 = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p1);
+        Arena arena2 = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p2);
+        if ((arena1 != arena2) || arena1 == null || arena2 == null) return;
+        else if (arena1.isSameTeam(p1, p2)) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onProjectileMobDamage(EntityDamageByEntityEvent e) {
+        Entity damaged = e.getEntity();
+        if (!(damaged instanceof Creature)) return;
+        Entity damager = e.getDamager();
+        if (!(damager instanceof Projectile)) return;
+
+        Entity shooter = (Entity) ((Projectile) damager).getShooter();
+        if (shooter instanceof Skeleton) {
+            e.setCancelled(true);
+            return;
+        }
+
+        if (!(shooter instanceof Player)) return;
+        Player p = ((Player) shooter).getPlayer();
+        Arena arena = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p);
+        if (arena == null) return;
+        if (arena.isDefender(p)) {
+            e.setCancelled(true);
+            return;
         }
     }
 

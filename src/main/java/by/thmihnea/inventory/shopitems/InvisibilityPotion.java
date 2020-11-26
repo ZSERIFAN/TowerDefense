@@ -44,7 +44,7 @@ public class InvisibilityPotion implements Listener {
         }
         if (i.getItemMeta().getDisplayName().equalsIgnoreCase("§6Invisibility Potion")) {
             p.getItemInHand().setAmount(0);
-            p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 100, 1));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, TowerDefense.cfg.getInt("invis_duration") * 20, 1));
             for (UUID uuid : arena.getDefenders()) {
                 Player def = Bukkit.getPlayer(uuid);
                 def.hidePlayer(p);
@@ -53,7 +53,7 @@ public class InvisibilityPotion implements Listener {
                     public void run() {
                         def.showPlayer(p);
                     }
-                }, 100L);
+                }, TowerDefense.cfg.getInt("invis_duration") * 20);
             }
         }
     }

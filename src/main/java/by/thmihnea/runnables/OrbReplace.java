@@ -26,7 +26,7 @@ public class OrbReplace implements Runnable {
     public void run() {
         if (isOver()) {
             clear();
-            block.setType(XMaterial.GREEN_STAINED_GLASS.parseMaterial());
+            block.setType(XMaterial.GLASS.parseMaterial());
             this.arena.broadCastMessage("§c§l(!) §6The orb has respawned! Break it " + (3 - orbBreak) + " more time(s) to defeat the Defenders!");
         }
     }

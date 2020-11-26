@@ -91,7 +91,9 @@ public class Util {
                 new SewerKey2(),
                 new Orb(),
                 new ArenaBreakOrbListener(),
-                new ArenaChatListener()
+                new ArenaChatListener(),
+                new Cobweb(),
+                new EntityDeathListener()
         };
         for (Listener listener : TowerDefense.getInstance().events)
             Bukkit.getPluginManager().registerEvents(listener, TowerDefense.getInstance());
@@ -149,7 +151,6 @@ public class Util {
         nmsu.registerEntity("Undead Archer", 51, EntitySkeleton.class, Skeleton.class);
         nmsu.registerEntity("Royal Wolf", 95, EntityWolf.class, Wolf.class);
         nmsu.registerEntity("Might Golem", 99, EntityIronGolem.class, Golem.class);
-        nmsu.registerEntity("Royal Witch", 66, EntityWitch.class, Witch.class);
     }
 
     public static boolean isNumber(String str) {

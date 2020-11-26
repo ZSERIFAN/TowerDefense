@@ -47,13 +47,6 @@ public class CreatureDeploy implements InventoryProvider {
             .title(Lang.ARENA_SHOP_NAME.toString())
             .build();
 
-    public static final SmartInventory shopWitches = SmartInventory.builder()
-            .id("creatureDeploy4")
-            .provider(new CreatureDeploy("witches", TowerDefense.cfg.getInt("prices.witches")))
-            .size(5, 9)
-            .title(Lang.ARENA_SHOP_NAME.toString())
-            .build();
-
     public static final SmartInventory shopGolem = SmartInventory.builder()
             .id("creatureDeploy5")
             .provider(new CreatureDeploy("golem", TowerDefense.cfg.getInt("prices.golem")))
@@ -98,12 +91,6 @@ public class CreatureDeploy implements InventoryProvider {
             case "golem":
                 Golem golem = new Golem(location.getWorld());
                 golem.spawn(location);
-                break;
-            case "witches":
-                for (int i = 0; i < 2; i++) {
-                    Witch witch = new Witch(location.getWorld());
-                    witch.spawn(location.add(i, 0, 0));
-                }
                 break;
         }
     }

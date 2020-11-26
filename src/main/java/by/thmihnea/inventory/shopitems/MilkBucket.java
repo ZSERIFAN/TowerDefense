@@ -19,7 +19,7 @@ public class MilkBucket implements Listener {
             return;
         }
 
-        player.getInventory().addItem(ItemCreateUtil.createItem(XMaterial.MILK_BUCKET.parseMaterial(), "§6Milk Bucket", "§7§oBuying this item will help you out", "§7§oescaping from tricky situations."));
+        player.getInventory().addItem(ItemCreateUtil.createItem(XMaterial.SUGAR.parseMaterial(), "§6Demineralizer", "§7§oBuying this item will help you out", "§7§oescaping from tricky situations."));
         arena.setMoney(player, arena.getMoney(player) - TowerDefense.cfg.getInt("prices.milk_bucket"));
     }
 
@@ -30,7 +30,7 @@ public class MilkBucket implements Listener {
         if (arena.isDefender(e.getPlayer())) return;
 
         Player p = e.getPlayer();
-        if (p.getInventory().getItemInHand().getType() != XMaterial.MILK_BUCKET.parseMaterial()) return;
+        if (p.getInventory().getItemInHand().getType() != XMaterial.SUGAR.parseMaterial()) return;
 
         if (p.getActivePotionEffects().isEmpty()) {
             p.sendMessage("§cYou can't use this item because you're currently not being poisoned!");
@@ -40,7 +40,10 @@ public class MilkBucket implements Listener {
         for (PotionEffect effect : p.getActivePotionEffects())
             p.removePotionEffect(effect.getType());
         p.sendMessage(Lang.SET_OFF_POISON.toString());
-        p.getInventory().remove(p.getItemInHand());
+        if (p.getInventory().getItemInHand().getAmount() > 1)
+            p.getInventory().getItemInHand().setAmount(p.getInventory().getItemInHand().getAmount() - 1);
+        else
+            p.getInventory().setItemInHand(null);
     }
 
 }

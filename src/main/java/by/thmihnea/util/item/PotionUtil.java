@@ -1,5 +1,6 @@
 package by.thmihnea.util.item;
 
+import by.thmihnea.TowerDefense;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -28,7 +29,7 @@ public class PotionUtil {
         PotionMeta meta = (PotionMeta) i.getItemMeta();
         meta.setDisplayName("§6Blindness Potion");
         meta.setLore(Arrays.asList("§7§oUse this potion to gain a small window", "§7§oto escape attacks for 5 seconds."));
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, TowerDefense.cfg.getInt("potions.blindness_duration") * 20, 1), true);
         i.setItemMeta(meta);
         return i;
     }
@@ -39,7 +40,7 @@ public class PotionUtil {
         PotionMeta meta = (PotionMeta) i.getItemMeta();
         meta.setDisplayName("§6Instant Healing Potion");
         meta.setLore(Arrays.asList("§7§oUse this potion to gain an instant", "§7§ohealth buff."));
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 20, 2), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.HEAL, 20, TowerDefense.cfg.getInt("potions.healing_strength")), true);
         i.setItemMeta(meta);
         return i;
     }
@@ -50,7 +51,7 @@ public class PotionUtil {
         PotionMeta meta = (PotionMeta) i.getItemMeta();
         meta.setDisplayName("§6Strength Potion");
         meta.setLore(Arrays.asList("§7§oUse this potion to strengthen your", "§7§oattacks."));
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, TowerDefense.cfg.getInt("potions.strength_duration") * 20, TowerDefense.cfg.getInt("potions.strength_strength")), true);
         i.setItemMeta(meta);
         return i;
     }
@@ -61,7 +62,7 @@ public class PotionUtil {
         PotionMeta meta = (PotionMeta) i.getItemMeta();
         meta.setDisplayName("§6Regeneration Potion");
         meta.setLore(Arrays.asList("§7§oUse this potion to regenerate", "§7§oyour health back."));
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 2), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, TowerDefense.cfg.getInt("potions.regen_duration") * 20, TowerDefense.cfg.getInt("potions.regen_strength")), true);
         i.setItemMeta(meta);
         return i;
     }
@@ -72,7 +73,7 @@ public class PotionUtil {
         PotionMeta meta = (PotionMeta) i.getItemMeta();
         meta.setDisplayName("§6Swiftness Potion");
         meta.setLore(Arrays.asList("§7§oUse this potion to boost", "§7§oyour movement speed."));
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 100, 2), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, TowerDefense.cfg.getInt("potions.speed_duration") * 20, TowerDefense.cfg.getInt("potions.speed_strength")), true);
         i.setItemMeta(meta);
         return i;
     }

@@ -34,7 +34,7 @@ public class ArenaSelector implements InventoryProvider {
                 Material mat = Material.QUARTZ_BLOCK;
                 if (arena.getState().equals(GameState.IN_PROGRESS) || arena.getState().equals(GameState.IN_EDITING) || arena.getState().equals(GameState.CLEANUP))
                     mat = Material.BARRIER;
-                ItemStack arenaItem = createItem(mat, "§6• §eArena #" + (i + 1), "§8§m------------------------", "", "§6➥ §eName: §f" + arena.getName(), "§6➥ §ePlayers: §f" + arena.getPlayers().size() + "/5", "§6➥ §eID: §f" + arena.getId(), "§6➥ §eStatus: " + arena.getState().toString(), "", "§7§oClick to join this arena!", "§8§m------------------------");
+                ItemStack arenaItem = createItem(mat, "§6• §eArena #" + (i + 1), "§8§m------------------------", "", "§6➥ §eName: §f" + arena.getName(), "§6➥ §ePlayers: §f" + arena.getPlayers().size() + "/" + TowerDefense.cfg.getInt("arena.arena_size"), "§6➥ §eID: §f" + arena.getId(), "§6➥ §eStatus: " + arena.getState().toString(), "", "§7§oClick to join this arena!", "§8§m------------------------");
                 contents.set(i / 9, i % 9, ClickableItem.of(arenaItem, e -> {
                     player.performCommand("join " + arena.getName());
                 }));

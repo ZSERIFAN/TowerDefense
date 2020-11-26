@@ -42,8 +42,8 @@ public class Skeleton extends EntitySkeleton {
     protected void initAttributes() {
         super.initAttributes();
 
-        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(25.0D);
-        this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(15.0D);
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(TowerDefense.cfg.getDouble("mobs.skeletons.hp"));
+        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(TowerDefense.cfg.getDouble("mobs.skeletons.ms"));
         this.setCustomName("§6Undead Archer");
         this.setCustomNameVisible(true);
     }

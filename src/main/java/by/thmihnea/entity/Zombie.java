@@ -40,9 +40,9 @@ public class Zombie extends EntityZombie {
     protected void initAttributes() {
         super.initAttributes();
 
-        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(40.0D);
-        this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(10.0D);
-        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.325);
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(TowerDefense.cfg.getDouble("mobs.zombie.hp"));
+        this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(TowerDefense.cfg.getDouble("mobs.zombie.ad"));
+        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(TowerDefense.cfg.getDouble("mobs.zombie.ms"));
         this.setCustomName("§6Royal Zombie");
         this.setCustomNameVisible(true);
         this.setBaby(false);

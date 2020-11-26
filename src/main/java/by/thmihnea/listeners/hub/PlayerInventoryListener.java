@@ -50,7 +50,8 @@ public class PlayerInventoryListener implements Listener {
         e.getItemDrop().getItemStack().getType().toString().toUpperCase().contains("HELMET") ||
                 e.getItemDrop().getItemStack().getType().toString().toUpperCase().contains("CHESTPLATE") ||
                 e.getItemDrop().getItemStack().getType().toString().toUpperCase().contains("LEGGINGS") ||
-                e.getItemDrop().getItemStack().getType().toString().toUpperCase().contains("BOOTS")) e.setCancelled(true);
+                e.getItemDrop().getItemStack().getType().toString().toUpperCase().contains("BOOTS") ||
+                e.getItemDrop().getItemStack().getType().toString().toUpperCase().contains("SWORD")) e.setCancelled(true);
     }
 
     @EventHandler

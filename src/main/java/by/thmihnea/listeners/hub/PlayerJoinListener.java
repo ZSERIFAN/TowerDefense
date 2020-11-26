@@ -20,6 +20,7 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         p.getInventory().clear();
+        p.getInventory().setHelmet(null);
         ArmorUtil.clearArmor(p);
         p.setHealth(20.0D);
         p.setFoodLevel(20);

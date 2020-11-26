@@ -9,15 +9,31 @@ import by.thmihnea.runnables.Cooldown;
 import by.thmihnea.runnables.CooldownType;
 import by.thmihnea.runnables.Respawn;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerDamageListener implements Listener {
+
+    public static void clearInventory(Player p) {
+        for (ItemStack is : p.getInventory().getContents()) {
+            if (is == null || is.getType() == Material.AIR) continue;
+            if (!is.getType().toString().toUpperCase().contains("SWORD") &&
+                    !is.getType().toString().toUpperCase().contains("HELMET") &&
+                    !is.getType().toString().toUpperCase().contains("CHESTPLATE") &&
+                    !is.getType().toString().toUpperCase().contains("LEGGINGS") &&
+                    !is.getType().toString().toUpperCase().contains("BOOTS"))
+                p.getInventory().remove(is);
+        }
+    }
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent e) {
@@ -41,10 +57,17 @@ public class PlayerDamageListener implements Listener {
             tdPlayer.addCooldown(cd);
         }
         if (p.getHealth() - e.getFinalDamage() <= 0) {
+            if (damager instanceof Player) {
+                Player dmgr = (Player) damager;
+                if ((arena.isAttacker(p) && arena.isAttacker(dmgr)) || (arena.isDefender(p) && arena.isDefender(dmgr))) {
+                    return;
+                }
+            }
             p.setGameMode(GameMode.SPECTATOR);
+            clearInventory(p);
             e.setDamage(0.001);
             p.setHealth(20.0);
-            new Respawn(p, TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p), 10);
+            new Respawn(p, TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p), TowerDefense.cfg.getInt("timers.respawn_timer"));
             if (damager instanceof Player) {
                 Player dmgr = (Player) damager;
                 TDPlayer tdpdmgr = TDPlayer.tdPlayers.get(dmgr.getUniqueId());
@@ -106,10 +129,11 @@ public class PlayerDamageListener implements Listener {
             }
         }
         if (p.getHealth() - e.getFinalDamage() <= 0) {
+            clearInventory(p);
             e.setDamage(0.01D);
             p.setGameMode(GameMode.SPECTATOR);
             p.setHealth(20.0D);
-            new Respawn(p, TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p), 10);
+            new Respawn(p, TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p), TowerDefense.cfg.getInt("timers.respawn_timer"));
             switch (e.getCause()) {
                 case FIRE:
                 case FIRE_TICK:

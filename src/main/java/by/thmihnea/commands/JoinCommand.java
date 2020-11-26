@@ -56,7 +56,7 @@ public class JoinCommand implements CommandExecutor {
                 p.sendMessage(Lang.CANT_JOIN_ARENA.toString());
                 return true;
             }
-            if (arena.getPlayers().size() >= 5) {
+            if (arena.getPlayers().size() >= TowerDefense.cfg.getInt("arena.arena_size")) {
                 p.sendMessage(Lang.ARENA_IS_FULL.toString());
                 return true;
             }
@@ -64,10 +64,10 @@ public class JoinCommand implements CommandExecutor {
             if (!arena.getPlayers().isEmpty()) {
                 for (UUID uuid : arena.getPlayers()) {
                     Player i = Bukkit.getPlayer(uuid);
-                    i.sendMessage(Lang.PLAYER_JOINED_YOUR_ARENA.toString().replace("%player%", p.getName()).replace("%inArena%", String.valueOf(arena.getPlayers().size())));
+                    i.sendMessage(Lang.PLAYER_JOINED_YOUR_ARENA.toString().replace("%player%", p.getName()).replace("%inArena%", String.valueOf(arena.getPlayers().size())).replace("%max%", String.valueOf(TowerDefense.cfg.getInt("arena.arena_size"))));
                 }
             }
-            p.sendMessage(Lang.JOINED_ARENA.toString().replace("%arena%", arena.getName()));
+            p.sendMessage(Lang.JOINED_ARENA.toString().replace("%arena%", arena.getName()).replace("%max%", String.valueOf(TowerDefense.cfg.getInt("arena.arena_size"))));
             p.teleport(arena.getSpawnPoints().get("lobby"));
             p.getInventory().clear();
             BarrierLeaveUtil.giveLeaveBarrier(p);

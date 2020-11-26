@@ -49,7 +49,9 @@ public class TNT implements Listener {
             }
             e.setCancelled(true);
             Location location = e.getBlock().getLocation();
-            location.getWorld().spawnEntity(location, EntityType.PRIMED_TNT);
+            Entity tnt = location.getWorld().spawnEntity(location, EntityType.PRIMED_TNT);
+            TNTPrimed tntp = (TNTPrimed) tnt;
+            tntp.setFuseTicks(TowerDefense.cfg.getInt("timers.tnt_explosion_time"));
         }
     }
 

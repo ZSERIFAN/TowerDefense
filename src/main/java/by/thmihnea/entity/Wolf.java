@@ -40,9 +40,9 @@ public class Wolf extends EntityWolf {
     protected void initAttributes() {
         super.initAttributes();
 
-        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(40.0D);
-        this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(8.0D);
-        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.55);
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(TowerDefense.cfg.getDouble("mobs.wolf.hp"));
+        this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(TowerDefense.cfg.getDouble("mobs.wolf.ad"));
+        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(TowerDefense.cfg.getDouble("mobs.wolf.ms"));
         this.setCustomName("§6Royal Wolf");
         this.setCustomNameVisible(true);
     }

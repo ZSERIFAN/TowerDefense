@@ -16,14 +16,18 @@ public class Orb implements Listener {
         Player p = e.getPlayer();
         Arena arena = TowerDefense.getInstance().getArenaHandler().getArenaByPlayer(p);
         if (arena == null) return;
-        if (e.getBlock().getType() != XMaterial.GREEN_STAINED_GLASS.parseMaterial()) return;
+        if (e.getBlock().getType() != XMaterial.GLASS.parseMaterial()) return;
         if (arena.isDefender(p)) {
+            e.setCancelled(true);
+            return;
+        }
+        if (!arena.getState().equals(GameState.IN_PROGRESS)) {
             e.setCancelled(true);
             return;
         }
         arena.broadCastMessage("§6" + p.getName() + " broke the orb!");
         arena.setOrbBreak(arena.getOrbBreak() + 1);
-        e.getBlock().getWorld().createExplosion(e.getBlock().getLocation(), 2, true);
+        e.getBlock().getWorld().createExplosion(e.getBlock().getLocation().getX(), e.getBlock().getLocation().getY(), e.getBlock().getLocation().getZ(), 4, false, false);
         e.setCancelled(true);
         e.getBlock().setType(XMaterial.EMERALD_BLOCK.parseMaterial());
         ArenaBreakOrbEvent event = new ArenaBreakOrbEvent(arena, p, arena.getOrbBreak(), e.getBlock());

@@ -81,7 +81,7 @@ public class TDCommand implements CommandExecutor {
             else
                 a.setState(GameState.NEEDS_SETUP);
             p.sendMessage(Lang.DISABLED_EDITOR.toString());
-            p.teleport(Bukkit.getWorld("world").getSpawnLocation());
+            p.teleport(new Location(Bukkit.getWorld(cfg.getString("hub.spawnLocation.world")), cfg.getDouble("hub.spawnLocation.x"), cfg.getDouble("hub.spawnLocation.y"), cfg.getDouble("hub.spawnLocation.z"), (float) cfg.getDouble("hub.spawnLocation.pitch"), (float) cfg.getDouble("hub.spawnLocation.yaw")));
             p.setGameMode(GameMode.SURVIVAL);
             p.getInventory().clear();
             SelectorUtil.giveSelector(p);

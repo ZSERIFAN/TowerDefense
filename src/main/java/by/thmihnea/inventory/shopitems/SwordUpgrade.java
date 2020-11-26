@@ -38,6 +38,12 @@ public class SwordUpgrade {
         } else if (sword.getType() == XMaterial.IRON_SWORD.parseMaterial()) {
             sword.setType(XMaterial.DIAMOND_SWORD.parseMaterial());
             player.getInventory().addItem(sword);
+        } else if (sword.getType() == XMaterial.STONE_SWORD.parseMaterial()) {
+            sword.setType(XMaterial.IRON_SWORD.parseMaterial());
+            player.getInventory().addItem(sword);
+        } else if (sword.getType() == XMaterial.WOODEN_SWORD.parseMaterial()) {
+            sword.setType(XMaterial.STONE_SWORD.parseMaterial());
+            player.getInventory().addItem(sword);
         }
 
         arena.setMoney(player, arena.getMoney(player) - TowerDefense.cfg.getInt("prices.sword_upgrade"));

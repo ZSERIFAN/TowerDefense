@@ -28,7 +28,7 @@ public class Wall implements Listener {
         TDPlayer tdPlayer = TDPlayer.tdPlayers.get(player.getUniqueId());
 
         if (tdPlayer.hasCooldown(CooldownType.WALL)) {
-            player.sendMessage(Lang.CANT_USE_COOLDOWN.toString());
+            player.sendMessage(Lang.CANT_USE_COOLDOWN.toString().replace("%timeLeft%", String.valueOf(tdPlayer.getCooldownByType(CooldownType.WALL).timeLeftInSeconds())));
             return;
         }
 
@@ -71,7 +71,8 @@ public class Wall implements Listener {
         for (int y = 0; y < 7; y++) {
             for (int i = 0; i < 7; i++) {
                 Block block = blockLocation.getBlock();
-                block.setType(XMaterial.BLACK_WOOL.parseMaterial());
+                if (block.getType() == XMaterial.AIR.parseMaterial())
+                    block.setType(XMaterial.BLACK_WOOL.parseMaterial());
                 blockLocation.add(rotation);
             }
             blockLocation.add(0, 1, 0);

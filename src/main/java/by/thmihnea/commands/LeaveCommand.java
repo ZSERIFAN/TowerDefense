@@ -49,7 +49,7 @@ public class LeaveCommand implements CommandExecutor {
         }
         arena.removePlayer(p);
         if (arena.getState().equals(GameState.COUNTDOWN))
-            if (arena.getPlayers().size() < 4)
+            if (arena.getPlayers().size() < TowerDefense.cfg.getInt("arena.minimum_players_to_start_game"))
                 arena.setState(GameState.WAITING);
         File file = new File("plugins/TowerDefense/gameHub.yml");
         if (file.exists()) {
@@ -57,14 +57,15 @@ public class LeaveCommand implements CommandExecutor {
             p.teleport(new Location(Bukkit.getWorld(cfg.getString("hub.spawnLocation.world")), cfg.getDouble("hub.spawnLocation.x"), cfg.getDouble("hub.spawnLocation.y"), cfg.getDouble("hub.spawnLocation.z"), (float) cfg.getDouble("hub.spawnLocation.pitch"), (float) cfg.getDouble("hub.spawnLocation.yaw")));
         }
         else p.teleport(Bukkit.getWorld("world").getSpawnLocation());
-        p.sendMessage(Lang.LEFT_ARENA.toString().replace("%arena%", arena.getName()));
+        p.sendMessage(Lang.LEFT_ARENA.toString().replace("%arena%", arena.getName()).replace("%max%", String.valueOf(TowerDefense.cfg.getInt("arena.arena_size"))));
         p.getInventory().clear();
         ArmorUtil.clearArmor(p);
+        p.getInventory().setHelmet(null);
         SelectorUtil.giveSelector(p);
         if (!arena.getPlayers().isEmpty()) {
             for (UUID uuid : arena.getPlayers()) {
                 Player i = Bukkit.getPlayer(uuid);
-                i.sendMessage(Lang.PLAYER_LEFT_YOUR_ARENA.toString().replace("%player%", p.getName()).replace("%inArena%", String.valueOf(arena.getPlayers().size())));
+                i.sendMessage(Lang.PLAYER_LEFT_YOUR_ARENA.toString().replace("%player%", p.getName()).replace("%inArena%", String.valueOf(arena.getPlayers().size())).replace("%max%", String.valueOf(TowerDefense.cfg.getInt("arena.arena_size"))));
             }
         }
         return false;

@@ -1,6 +1,5 @@
 # Configuration file for Tower Defense
 # Coded with love by thmihnea
-
 prices: # Prices for all the items available in the Shop.
   bowarrow: 250
   sword_upgrade: 100
@@ -10,7 +9,6 @@ prices: # Prices for all the items available in the Shop.
   zombies: 250
   skeletons: 250
   wolves: 350
-  witches: 400
   golem: 500
   lava_trap: 250
   wall: 100
@@ -21,13 +19,58 @@ prices: # Prices for all the items available in the Shop.
   blindness: 350
   sewer_key_1: 250
   sewer_key_2: 250
+  cobweb: 75
+  regen_pot: 100
+  healing_pot: 100
+  strength_pot: 100
+  speed_pot: 100
 income:
   attacker: 1
   defender: 3
+  zombie_kill: 25
+  wolf_kill: 15
+  skeleton_kill: 25
+  golem_kill: 50
 cooldowns: # Set in seconds.
   lava_trap: 150
   wall: 150
   combat: 5
 bounty:
   default_money_on_kill: 150
+arena:
+  minimum_players_to_start_game: 2
+  arena_size: 5
+timers: # Set in seconds.
+  lava_trap_removal: 15
+  tnt_explosion_time: 5 # Set in ticks (20 ticks = 1 second)
+  respawn_timer: 10 # Set in seconds
+potions:
+  strength_strength: 0 # 0 means Strength I, 1 means Strength II and so on
+  strength_duration: 5 # Set in seconds
+  healing_strength: 2
+  regen_strength: 2
+  regen_duration: 5
+  speed_strength: 2
+  speed_duration: 5
+  invis_duration: 5
+  blindness_duration: 5
+mobs:
+  golem:
+    hp: 250.0 # health
+    ad: 10.0 # attack damage - DOESN'T WORK IN 1.8; GOLEM AD ATTRIBUTE CAN'T BE MODIFIED; will code in a later version if needed
+    ms: 0.325 # movement speed
+  skeleton:
+    hp: 25.0
+    # Skeletons use normal Minecraft arrows; damage can't be changed
+    ms: 0.25
+  zombie:
+    hp: 40.0
+    ad: 10.0
+    ms: 0.325
+  wolf:
+    hp: 40.0
+    ad: 8.0
+    ms: 0.45
+
+
 

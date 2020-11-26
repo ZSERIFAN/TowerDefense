@@ -22,7 +22,6 @@ public class ArmorUpgrade {
         if (str.contains("LEATHER")) i = 1;
         else if (str.contains("GOLD")) i = 2;
         else if (str.contains("IRON")) i = 3;
-        else if (str.contains("DIAMOND")) i = 4;
 
         switch (i) {
             case 1:
@@ -34,10 +33,6 @@ public class ArmorUpgrade {
                 ArmorUtil.setArmor(player, "iron");
                 break;
             case 3:
-                ArmorUtil.clearArmor(player);
-                ArmorUtil.setArmor(player, "diamond");
-                break;
-            case 4:
             default:
                 player.sendMessage("§cYou can't upgrade your armor anymore!");
                 return;
