@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Tower Defense:jar">
-    <output-path>$USER_HOME$/Desktop/rohi server/factions/plugins</output-path>
-    <root id="archive" name="Tower Defense.jar">
-      <element id="module-output" name="Tower Defense" />
-    </root>
-  </artifact>
-</component>
